@@ -18,7 +18,6 @@ class CharactersRepository  {
     val characters: MutableLiveData<CharacterResponse> = MutableLiveData<CharacterResponse>()
     init {
         val client = OkHttpClient.Builder().build()
-
         apiService = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)

@@ -12,12 +12,13 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("/api/character")
-    fun getCharacters():Call<CharacterResponse>
-    @GET("/api/character/{characterId}")
-    fun getCharacterById(@Path("characterId") characterId: String): Call<Character>
+    fun getCharacters() : Call<CharacterResponse>
 
-    @GET("/api/episode")
-    fun getEpisodesPerCharacter(@Query("name") charcterName: String): Call<List<Episode>>
+    @GET("/api/character/{characterId}")
+    fun getCharacterById(@Path("characterId") characterId : String ) : Call<Character>
+
+    @GET("/api/episode/{episodes}")
+    fun getEpisodePerCharacter(@Path("episodes") episodes : String) : Call<List<Episode>>
 }
 
 //@Path("path") path: String,
