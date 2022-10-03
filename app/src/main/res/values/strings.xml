@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Rick and Morty Watch Book</string>
+    <string name="search">Search</string>
+    <string name="advanced_filters">Advanced Filters</string>
+    <string name="filter">Filter</string>
+    <string name="species">Species</string>
+    <string name="gender">Gender</string>
+    <string name="status">Status</string>
+    <string name="applyButtonText">Apply</string>
+</resources>
