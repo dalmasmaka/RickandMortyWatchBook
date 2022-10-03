@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
     app:startDestination="@id/homeFragment">
-
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.dalmasmaka.rickandmortywatchbook.ui.home.HomeFragment"
@@ -16,13 +15,10 @@
     </fragment>
     <fragment
         android:id="@+id/characterDetailFragment"
-        android:name="com.mirtneg.rickandmortywarchbool.ui.characterDetail.CharacterDetailFragment"
+        android:name="com.dalmasmaka.rickandmortywatchbook.ui.characterDetail.CharacterDetailFragment"
         android:label="CharacterDetailFragment" >
         <argument
             android:name="character_id"
             app:argType="string"/>
-
-
     </fragment>
-
 </navigation>

@@ -6,34 +6,36 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.dalmasmaka.rickandmortywatchbook.R
 import com.dalmasmaka.rickandmortywatchbook.databinding.FragmentCharacterDetailBinding
-import com.dalmasmaka.rickandmortywatchbook.ui.characterdetail.EpisodeAdapter
-import com.mirtneg.rickandmortywarchbool.ui.characterDetail.CharacterDetailFragmentArgs
-import com.mirtneg.rickandmortywarchbool.ui.characterDetail.CharacterDetailViewModel
+import com.dalmasmaka.rickandmortywatchbook.ui.characterdetail.EpisodesAdapter
 import com.squareup.picasso.Picasso
 
 class CharacterDetailFragment : Fragment() {
     lateinit var binding: FragmentCharacterDetailBinding
     val args by navArgs<CharacterDetailFragmentArgs>()
     lateinit var viewModel: CharacterDetailViewModel
-    lateinit var adapter : EpisodeAdapter
+    lateinit var adapter : EpisodesAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCharacterDetailBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity()).get(CharacterDetailViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[CharacterDetailViewModel::class.java]
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        adapter = EpisodesAdapter(this::onEpisodeClick)
         viewModel.getCharacterById(args.characterId)
+        binding.episodes.layoutManager = LinearLayoutManager(requireActivity())
+        binding.episodes.adapter = adapter
 
-        viewModel.character.observe(viewLifecycleOwner) {
+        viewModel.characterResponse.observe(viewLifecycleOwner) {
             with(it) {
                 binding.characterName.text = name
                 Picasso.get().load(image).into(binding.characterImage)
@@ -57,10 +59,16 @@ class CharacterDetailFragment : Fragment() {
                 binding.locationInfo.dataTextView.text = location.name
             }
         }
-
-        viewModel.episodeResponse.observe(viewLifecycleOwner) {
-            val episodes = it
-            //todo complete this part adapter per episodes
+        adapter
+        viewModel.episodeResponse.observe(viewLifecycleOwner){
+            adapter.episodes = it
         }
+
+        binding.backButton.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_characterDetailFragment)
+        }
+    }
+    fun onEpisodeClick(episodeId : String){
+        println("Clicked Episode $episodeId")
     }
 }
